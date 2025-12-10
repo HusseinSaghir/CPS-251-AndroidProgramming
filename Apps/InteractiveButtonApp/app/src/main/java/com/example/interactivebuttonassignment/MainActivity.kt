@@ -38,11 +38,7 @@ fun InteractiveButtonGrid() {
 
     var selectedButtons by remember { mutableStateOf(setOf<Int>()) }
 
-    /* ^^^ 1. We Created a state variable above with mutable state of and used the Set of Int type
-     We add the Mutable state of because it creates an observable state that will trigger an action such as our buttons
-     we need to add remember in order for the machine to preserve that information once it re-compiles to not reset it
-     using a normal variable wouldn't work because the data would constantly be resetting
-    */
+  
 
 
 
@@ -112,13 +108,7 @@ fun InteractiveButtonGrid() {
                 )
             }
         }
-        /*^^^ 2. Created a FlowRow above along with an parameters to create interactive buttons
-        There are a lot of advantages to using FlowRow over row or column such as
-        Automatic wrapping so you don't have to scroll around the screen for buttons
-        Adapts to different screen sizes without the use of overflow and allows for better spacing
-        The problem with just using Row  would be on smaller screens the buttons could be cutoff
-        */
-
+      
         Button(
             onClick = { selectedButtons = setOf() } ,
             enabled = selectedButtons.isNotEmpty() , //
@@ -144,25 +134,13 @@ fun InteractiveButton(
     isSelected: Boolean,
     onClick: () -> Unit
 
-    /* ^^^ 3. So we make interactive button it's own composable for multiple reasons but the
-        main one being reusability and readability. It's overall just easier to maintain button logic
-        when it's isolated and you can now use this button code anywhere else in the app
-        similarly to making a new class in Java
-    */
-
-) {
+  ) {
     Box(
         modifier = Modifier
 
             .size(80.dp)
 
-            /* vvv 4A. Background will fill the entire shape of the...background with a solid color
-            Below We need to make an if else statement in order to background colors Depending on our selections
-            will use our buttonData color if nothings chosen
-            Shape will set our background size
-            .primaryContainer will effect backgrounds for our chips or containers
-            */
-
+          
             .background(
                 color = if (isSelected) {
                     MaterialTheme.colorScheme.primaryContainer
@@ -172,13 +150,7 @@ fun InteractiveButton(
                 shape = MaterialTheme.shapes.medium
             )
 
-            /*vvv 4B. Border is specifically just for the outline or edges of a shape we use it on
-             Setting our border thickness and choosing color based depending on our selection
-            Shape will gives us our smooth edges
-            For color the 0.3f will make our selection transparent at 30% opacity
-            .primary will effect primary buttons
-            */
-            .border(
+                       .border(
                 width = if (isSelected) 3.dp else 1.dp,
 
                 color = if (isSelected) {
@@ -192,21 +164,13 @@ fun InteractiveButton(
             .clickable { onClick() }
         ,
 
-        // 4C. Together we use border and background to create buttons with a colored background with borders
-        // That will change based on our selections
-
-
+      
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = buttonData.number,
 
-            // 5. It's better to group related information because it's good code design to keep data
-            // together so it can be easier to maintain and access along with making testing easier
-
-            //vvv Same concept as all the other if else statements before
-            //onPrimaryContainer will effect our text icons and other foreground elements
-            color = if (isSelected) {
+             {
                 MaterialTheme.colorScheme.onPrimaryContainer
             } else {
                 Color.White
